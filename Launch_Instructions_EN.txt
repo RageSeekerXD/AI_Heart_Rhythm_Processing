@@ -1,0 +1,254 @@
+==============================================================================
+         LAUNCH INSTRUCTIONS: "HEART RHYTHM RECOGNITION" APPLICATION
+==============================================================================
+
+Note: the application interface is in Ukrainian.
+
+1. Purpose
+----------
+
+The application generates heart rate (HR) sequences for normal rhythm and
+arrhythmia using formulas (4) and (5) from the article "Генерування ритмів"
+("Rhythm Generation"), trains a Brain.js neural network on them, and
+recognizes sequences entered by the user. Results (images in PNG, JPG, BMP, a
+text result, the dataset, the model, and the operation log) are saved to
+files.
+
+
+2. System requirements
+----------------------
+
+  - Operating system: Windows 10 / 11, macOS, or Linux.
+  - Browser: Google Chrome or Microsoft Edge version 100 or newer, Mozilla
+    Firefox 100+, Safari 15.4+ (HTML5 Canvas and the <dialog> element are
+    required).
+  - Not required: Node.js, npm, a local server, an IDE, or an internet
+    connection. The application opens directly from disk.
+  - Library: Brain.js 2.0.0-beta.24 (MIT license) is already included in the
+    application: Аплікація\lib\brain-browser.js. There are no other
+    dependencies.
+
+The application has been tested in Google Chrome 154 and Microsoft Edge 154 on
+Windows 11 Pro.
+
+
+3. Folder structure
+-------------------
+
+Folder names are in Ukrainian: Аплікація = Application, Звіт = Report,
+Інструкція = Instructions.
+
+Table 1 - Archive contents
+
++--------------------------------+-------------------------------------------+
+| Path                           | Purpose                                   |
++================================+===========================================+
+| Аплікація\index.html           | Main page of the application; open it in  |
+|                                | a browser                                 |
++--------------------------------+-------------------------------------------+
+| Аплікація\start.bat            | Launch script for Windows (section 4)     |
++--------------------------------+-------------------------------------------+
+| Аплікація\start.sh             | Launch script for macOS / Linux (section  |
+|                                | 5)                                        |
++--------------------------------+-------------------------------------------+
+| Аплікація\css\styles.css       | Interface styles                          |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\app.js            | Interface logic: button handling,         |
+|                                | progress bars, file saving, the           |
+|                                | "Інформація" (Information) window         |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\generator.js      | Data generation using formulas (4) and    |
+|                                | (5), train/test split, dataset import and |
+|                                | export (CSV, JSON)                        |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\model.js          | Brain.js neural network: epoch-by-epoch   |
+|                                | training, evaluation, sliding-window      |
+|                                | recognition, model saving                 |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\charts.js         | Error and accuracy charts, scatter plot,  |
+|                                | thumbnails                                |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\ecg-render.js     | Result images: ECG strip, interval        |
+|                                | histogram, class probabilities            |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\image-export.js   | Saving images as PNG, JPG, and BMP        |
+|                                | (custom BMP encoder)                      |
++--------------------------------+-------------------------------------------+
+| Аплікація\js\logger.js,        | Operation log, seeded random number       |
+| rng.js, util.js                | generator, helper functions               |
++--------------------------------+-------------------------------------------+
+| Аплікація\lib\brain-browser.js | Brain.js 2.0.0-beta.24 library (local     |
+|                                | copy) and its license file                |
++--------------------------------+-------------------------------------------+
+| Звіт\                          | Lab reports; the "Скріншоти"              |
+|                                | (Screenshots) subfolder contains the      |
+|                                | report figures                            |
++--------------------------------+-------------------------------------------+
+| Інструкція\                    | These instructions                        |
++--------------------------------+-------------------------------------------+
+
+Important: the css, js, and lib folders must stay next to index.html. If they
+are moved or renamed, the page will open without styles or without the neural
+network.
+
+
+4. Running on Windows
+---------------------
+
+Method 1: the start.bat script. Open the Аплікація folder and double-click
+start.bat. The application opens in the system default browser. The script
+performs the following steps:
+
+  1. chcp 65001 switches the console to UTF-8 so that Ukrainian messages are
+     displayed correctly.
+  2. cd /d "%~dp0" changes to the folder containing the script itself (the
+     application can be placed anywhere, including a path with Cyrillic
+     characters).
+  3. Checks that index.html exists; if it is missing, prints an error message
+     and waits for a key press.
+  4. Checks that the library lib\brain-browser.js exists in the same way.
+  5. If the script is run with the --check parameter (start.bat --check from
+     the command line), it only reports that the files are in place and exits.
+     This lets you verify the installation without opening a browser.
+  6. start "" "%~dp0index.html" opens the page in the default browser.
+
+Listing 1 - The start.bat file
+
+    @echo off
+    chcp 65001 >nul
+    cd /d "%~dp0"
+    if not exist "index.html" (
+      echo [ПОМИЛКА] Не знайдено index.html поруч із start.bat.
+      pause
+      exit /b 1
+    )
+    if not exist "lib\brain-browser.js" (
+      echo [ПОМИЛКА] Не знайдено бібліотеку lib\brain-browser.js.
+      pause
+      exit /b 1
+    )
+    if /i "%~1"=="--check" (
+      echo [OK] Файли застосунку на місці: index.html, lib\brain-browser.js
+      exit /b 0
+    )
+    echo Відкриваю застосунок у браузері...
+    start "" "%~dp0index.html"
+    exit /b 0
+
+The script messages are in Ukrainian: "[ПОМИЛКА] Не знайдено ..." means
+"[ERROR] ... not found", "Файли застосунку на місці" means "Application files
+are in place", and "Відкриваю застосунок у браузері..." means "Opening the
+application in the browser...". The actual start.bat file also contains
+comment lines (rem) after the chcp line; they are omitted from the listing.
+
+Method 2: manually. Double-click index.html or drag it into a browser window.
+To open the page in a specific browser, right-click the file and choose "Open
+with".
+
+
+5. Running on macOS and Linux
+-----------------------------
+
+In a terminal, go to the Аплікація folder and run:
+
+    chmod +x start.sh
+    ./start.sh
+
+The script changes to its own folder, checks that index.html and
+lib/brain-browser.js exist, and opens the page with xdg-open (Linux) or open
+(macOS). You can also simply open index.html in a browser.
+
+
+6. Checking that the application works
+--------------------------------------
+
+After the page opens, the operation log (on the right) shows the entry
+"Застосунок запущено. Бібліотеку brain.js 2.0.0-beta.24 завантажено."
+("Application started. The brain.js 2.0.0-beta.24 library is loaded."). If
+instead a red message "Не вдалося завантажити бібліотеку brain.js" ("Failed to
+load the brain.js library") appears under the header, make sure the lib folder
+is next to index.html.
+
+
+7. Quick start
+--------------
+
+  1. Step 1. Click "Згенерувати дані" (Generate data); the default is 1,000
+     sequences. The progress bar shows generation progress, and a summary, a
+     chart, and examples appear.
+  2. Step 2. If needed, change the number of epochs and the learning rate,
+     then click "Навчити мережу" (Train network). The progress bar updates
+     after every epoch; after training, the network is automatically evaluated
+     on the test set.
+  3. Step 3. Click, for example, "Приклад зі статті: аритмія" (Article
+     example: arrhythmia), or enter your own HR sequence (e.g. 72, 68, 75, 71,
+     69) and click "Розпізнати" (Recognize).
+  4. Save the image (PNG / JPG / BMP), the result (.txt), or the log (.txt)
+     with the corresponding buttons. Help and technical information are
+     available via the "Довідка" (Help) and "Інформація" (Information) buttons
+     in the header.
+
+
+8. Where to find saved files
+----------------------------
+
+The application saves files through the browser, so they go to the browser
+downloads folder (usually C:\Users\<name>\Downloads). File names include the
+date and time, for example rhythm_arrhythmia_2026-10-01_20-36-23.png,
+rhythm_model_4-8-2_....json, rhythm_log_....txt. When saving several files in
+a row for the first time, the browser may ask for permission to "download
+multiple files"; this permission should be granted.
+
+
+9. Troubleshooting
+------------------
+
+Table 2 - Common problems
+
++------------------------+-----------------------+--------------------------+
+| Problem                | Cause                 | Solution                 |
++========================+=======================+==========================+
+| Red message "Не        | The lib folder or the | Extract the whole        |
+| вдалося завантажити    | brain-browser.js file | archive without moving   |
+| бібліотеку brain.js"   | is missing            | individual files         |
+| (Failed to load the    |                       |                          |
+| brain.js library)      |                       |                          |
++------------------------+-----------------------+--------------------------+
+| Page has no styling    | The css folder is     | Same as above: restore   |
+|                        | missing               | the folder structure     |
++------------------------+-----------------------+--------------------------+
+| Save buttons do not    | The browser blocks    | Allow downloads for this |
+| create files           | automatic downloads   | page in the browser      |
+|                        |                       | settings                 |
++------------------------+-----------------------+--------------------------+
+| The "Довідка" (Help)   | Outdated browser      | Update the browser or    |
+| and "Інформація"       | without <dialog>      | use Chrome / Edge        |
+| (Information) windows  | support               |                          |
+| do not open            |                       |                          |
++------------------------+-----------------------+--------------------------+
+| Windows shows a        | SmartScreen           | Click "More info" > "Run |
+| warning when running   | protection for files  | anyway", or open         |
+| start.bat              | from the internet     | index.html directly      |
++------------------------+-----------------------+--------------------------+
+
+
+10. Technology versions
+-----------------------
+
+Table 3 - Technologies used
+
++------------------------+---------------------------------------------------+
+| Component              | Version / note                                    |
++========================+===================================================+
+| Languages              | HTML5, CSS3, JavaScript (ES2020) without          |
+|                        | frameworks or bundlers                            |
++------------------------+---------------------------------------------------+
+| Neural network         | Brain.js 2.0.0-beta.24, brain.NeuralNetwork       |
+|                        | class, MIT license                                |
++------------------------+---------------------------------------------------+
+| Development            | Visual Studio Code                                |
+| environment            |                                                   |
++------------------------+---------------------------------------------------+
+| Tested in browsers     | Google Chrome 154.0, Microsoft Edge 154.0         |
+|                        | (Windows 11 Pro)                                  |
++------------------------+---------------------------------------------------+

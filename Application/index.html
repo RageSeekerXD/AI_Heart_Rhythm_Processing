@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Розпізнавання серцевого ритму — Brain.js</title>
+  <meta name="description" content="Генерація послідовностей ЧСС (нормальний ритм / аритмія), навчання нейронної мережі Brain.js та розпізнавання ритму">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%234a3aa7' d='M16 28.5S3 20.4 3 11.6C3 7.5 6.1 4.5 9.8 4.5c2.8 0 5 1.6 6.2 3.8 1.2-2.2 3.4-3.8 6.2-3.8 3.7 0 6.8 3 6.8 7.1 0 8.8-13 16.9-13 16.9Z'/%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M6 15.5h4.5l2-3.5 3 7 2.5-5.5 1.5 2H26'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Набір іконок (використовуються через <use>) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.8v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.4" r="1.25" fill="currentColor"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 9.4a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.1.8-1.1 1.6v.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="17" r="1.15" fill="currentColor"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4.2-4.2M12 15l4.2-4.2M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15.5v-11m0 0L7.8 8.7M12 4.5l4.2 4.2M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9.5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19.5h16M6.5 16l4-5 3.5 3 5-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.5 12.5h4l2-4.5 3.2 9 2.6-6.5 1.6 2h5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8.5 7h11M8.5 12h11M8.5 17h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><circle cx="5" cy="12" r="1.2" fill="currentColor"/><circle cx="5" cy="17" r="1.2" fill="currentColor"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти до вмісту</a>
+
+  <header class="app-header">
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 32 32" aria-hidden="true">
+        <path fill="#4a3aa7" d="M16 28.5S3 20.4 3 11.6C3 7.5 6.1 4.5 9.8 4.5c2.8 0 5 1.6 6.2 3.8 1.2-2.2 3.4-3.8 6.2-3.8 3.7 0 6.8 3 6.8 7.1 0 8.8-13 16.9-13 16.9Z"/>
+        <path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M6 15.5h4.5l2-3.5 3 7 2.5-5.5 1.5 2H26"/>
+      </svg>
+      <div>
+        <h1>Розпізнавання серцевого ритму</h1>
+        <p class="brand-sub">Нормальний ритм чи аритмія · генерація послідовностей ЧСС і нейронна мережа Brain.js</p>
+      </div>
+    </div>
+    <nav class="header-actions" aria-label="Довідкова інформація">
+      <button type="button" class="btn btn-ghost" id="btnHelp" aria-haspopup="dialog">
+        <svg aria-hidden="true"><use href="#i-help"/></svg>Довідка
+      </button>
+      <button type="button" class="btn btn-ghost" id="btnInfo" aria-haspopup="dialog">
+        <svg aria-hidden="true"><use href="#i-info"/></svg>Інформація
+      </button>
+    </nav>
+  </header>
+
+  <ol class="stepper" aria-label="Стан роботи">
+    <li id="stateData" data-done="false"><a href="#step1"><span class="step-dot">1</span><span>Дані: <span class="step-state">не згенеровано</span></span></a></li>
+    <li id="stateModel" data-done="false"><a href="#step2"><span class="step-dot">2</span><span>Модель: <span class="step-state">не навчена</span></span></a></li>
+    <li id="stateResult" data-done="false"><a href="#step3"><span class="step-dot">3</span><span>Розпізнавання: <span class="step-state">не виконано</span></span></a></li>
+  </ol>
+
+  <div class="banner banner-error" id="libError" role="alert" hidden>
+    Не вдалося завантажити бібліотеку <strong>brain.js</strong> (файл <code>lib/brain-browser.js</code>).
+    Перевірте, що папка <code>lib</code> лежить поруч з <code>index.html</code>. Навчання та розпізнавання недоступні.
+  </div>
+
+  <main id="main" class="layout">
+    <div class="steps">
+
+      <!-- ============================================ КРОК 1. ДАНІ -->
+      <section class="card step" id="step1" aria-labelledby="step1Title">
+        <header class="step-head">
+          <span class="step-num" aria-hidden="true">1</span>
+          <div>
+            <h2 id="step1Title">Генерація навчальних даних</h2>
+            <p>Послідовності ЧСС (уд/хв) для двох класів за формулами (4) і (5) зі статті</p>
+          </div>
+        </header>
+        <div class="step-body">
+          <form id="formData" class="controls" novalidate>
+            <div class="form-errors" id="errData" role="alert" hidden></div>
+
+            <fieldset class="group">
+              <legend>Обсяг вибірки</legend>
+              <div class="field">
+                <label for="perClass">Послідовностей кожного класу</label>
+                <input id="perClass" type="number" min="10" max="5000" step="10" value="500" required>
+                <small class="hint">Усього буде 2 × це число. Для репрезентативності — понад 250 зразків.</small>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="seqLen">Довжина K, чисел</label>
+                  <input id="seqLen" type="number" min="3" max="12" step="1" value="4" required>
+                </div>
+                <div class="field">
+                  <label for="testPct">Тестова вибірка, %</label>
+                  <input id="testPct" type="number" min="5" max="50" step="1" value="20" required>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend><span class="swatch swatch-normal" aria-hidden="true"></span>Нормальний ритм · формула (4)</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="normMin">Мін. ЧСС, уд/хв</label>
+                  <input id="normMin" type="number" min="30" max="200" step="1" value="60" required>
+                </div>
+                <div class="field">
+                  <label for="normMax">Макс. ЧСС, уд/хв</label>
+                  <input id="normMax" type="number" min="30" max="200" step="1" value="100" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="tol">Допуск Tol(r), уд/хв</label>
+                <input id="tol" type="number" min="0" max="30" step="1" value="8" required>
+                <small class="hint">Tmin = Tmax − random(Tol): значення в послідовності відрізняються не більше ніж на Tol.</small>
+              </div>
+            </fieldset>
+
+            <fieldset class="group">
+              <legend><span class="swatch swatch-arr" aria-hidden="true"></span>Аритмія · формула (5)</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="arrMin">Мін. ЧСС, уд/хв</label>
+                  <input id="arrMin" type="number" min="30" max="220" step="1" value="50" required>
+                </div>
+                <div class="field">
+                  <label for="arrMax">Макс. ЧСС, уд/хв</label>
+                  <input id="arrMax" type="number" min="30" max="220" step="1" value="120" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="minSpread">Мін. розкид у послідовності, уд/хв</label>
+                <input id="minSpread" type="number" min="1" max="100" step="1" value="15" required>
+                <small class="hint">Випадково «рівні» послідовності відкидаються та генеруються заново.</small>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="seed">Зерно генератора (seed)</label>
+              <input id="seed" type="text" inputmode="numeric" autocomplete="off" placeholder="порожньо — випадкове">
+              <small class="hint">Однакове зерно дає однаковий набір даних.</small>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary" id="btnGenerate">
+                <svg aria-hidden="true"><use href="#i-play"/></svg>Згенерувати дані
+              </button>
+            </div>
+            <div class="actions">
+              <div class="save-group">
+                <label class="sr-only" for="dataFormat">Формат файлу набору даних</label>
+                <select id="dataFormat" title="Формат файлу набору даних">
+                  <option value="csv">CSV</option>
+                  <option value="json">JSON</option>
+                </select>
+                <button type="button" class="btn" id="btnSaveData" disabled>
+                  <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти набір
+                </button>
+              </div>
+              <label class="btn file-btn" id="lblFileData" title="Завантажити набір даних із файлу CSV або JSON">
+                <svg aria-hidden="true"><use href="#i-upload"/></svg>Завантажити набір…
+                <input type="file" id="fileData" accept=".csv,.json,text/csv,application/json">
+              </label>
+            </div>
+          </form>
+
+          <div class="output">
+            <div class="progress" id="progData" data-state="idle">
+              <div class="progress-head">
+                <span class="progress-title">Генерація послідовностей</span>
+                <span class="progress-text">Очікує запуску</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Прогрес генерації даних" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="out-head">
+              <h3>Набір даних</h3>
+              <button type="button" class="icon-btn" id="btnDataInfo" title="Інформація про набір даних" aria-label="Інформація про набір даних">
+                <svg aria-hidden="true"><use href="#i-info"/></svg>
+              </button>
+            </div>
+            <div class="kpis" id="dataKpis">
+              <div class="placeholder" style="grid-column: 1 / -1; min-height: 72px">
+                <span><strong>Тут з'явиться зведення набору:</strong> кількість зразків, розподіл на навчальну й тестову вибірки, час генерації.</span>
+              </div>
+            </div>
+
+            <div class="viz-grid">
+              <figure class="viz grow">
+                <figcaption>Розподіл зразків: середня ЧСС і розкид</figcaption>
+                <div class="legend" aria-hidden="true">
+                  <span><i class="swatch swatch-normal"></i>Нормальний ритм</span>
+                  <span><i class="swatch swatch-arr"></i>Аритмія</span>
+                </div>
+                <div class="canvas-wrap">
+                  <canvas id="scatterCanvas" class="chart-canvas" role="img" aria-label="Діаграма розсіювання: середня ЧСС по горизонталі, розкид значень по вертикалі"></canvas>
+                  <div class="placeholder" id="scatterEmpty">
+                    <svg aria-hidden="true"><use href="#i-chart"/></svg>
+                    <span><strong>Діаграма розсіювання</strong><br>з'явиться після генерації або завантаження даних</span>
+                  </div>
+                  <div class="chart-tip" id="scatterTip" hidden></div>
+                </div>
+              </figure>
+              <figure class="viz">
+                <figcaption>Приклади послідовностей <small>клік — перенести в розпізнавання</small></figcaption>
+                <div class="gallery" id="gallery">
+                  <div class="placeholder" style="grid-column: 1 / -1; min-height: 230px">
+                    <svg aria-hidden="true"><use href="#i-pulse"/></svg>
+                    <span><strong>Приклади послідовностей</strong><br>кожна показана як смужка R-зубців: рівні проміжки — норма, нерівні — аритмія</span>
+                  </div>
+                </div>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ КРОК 2. НАВЧАННЯ -->
+      <section class="card step" id="step2" aria-labelledby="step2Title">
+        <header class="step-head">
+          <span class="step-num" aria-hidden="true">2</span>
+          <div>
+            <h2 id="step2Title">Навчання нейронної мережі</h2>
+            <p>Прямопоширювальна мережа brain.js: K входів → прихований шар → 2 виходи (норма, аритмія)</p>
+          </div>
+        </header>
+        <div class="step-body">
+          <form id="formTrain" class="controls" novalidate>
+            <div class="form-errors" id="errTrain" role="alert" hidden></div>
+
+            <fieldset class="group">
+              <legend>Параметри навчання</legend>
+              <div class="field">
+                <label for="epochs">Кількість епох</label>
+                <input id="epochs" type="number" min="1" max="20000" step="1" value="1000" required>
+                <small class="hint">Епоха — один прохід по всій навчальній вибірці.</small>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="lr">Швидкість навчання</label>
+                  <input id="lr" type="number" min="0.001" max="0.999" step="0.01" value="0.3" required>
+                </div>
+                <div class="field">
+                  <label for="momentum">Момент (momentum)</label>
+                  <input id="momentum" type="number" min="0.01" max="0.99" step="0.01" value="0.1" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="hidden">Нейронів у прихованих шарах</label>
+                <input id="hidden" type="text" value="8" autocomplete="off" placeholder="напр.: 8 або 12, 6" required>
+                <small class="hint">Через кому — кілька шарів. Активація: сигмоїда.</small>
+              </div>
+              <div class="inline-field">
+                <label class="check" for="earlyStop"><input type="checkbox" id="earlyStop">Рання зупинка: помилка ≤</label>
+                <label class="sr-only" for="errThresh">Цільова помилка для ранньої зупинки</label>
+                <input id="errThresh" type="number" min="0.00001" max="0.5" step="0.0001" value="0.001" disabled>
+              </div>
+            </fieldset>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary" id="btnTrain" disabled>
+                <svg aria-hidden="true"><use href="#i-play"/></svg>Навчити мережу
+              </button>
+              <button type="button" class="btn btn-danger" id="btnStop" disabled>
+                <svg aria-hidden="true"><use href="#i-stop"/></svg>Зупинити
+              </button>
+            </div>
+            <small class="hint" id="trainHint">Спочатку згенеруйте або завантажте набір даних (крок 1).</small>
+            <div class="actions">
+              <button type="button" class="btn" id="btnEvaluate" disabled title="Повторно перевірити модель на тестовій вибірці">Оцінити на тестовій вибірці</button>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn" id="btnSaveModel" disabled>
+                <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти модель (JSON)
+              </button>
+              <label class="btn file-btn" id="lblFileModel" title="Завантажити раніше збережену модель (JSON)">
+                <svg aria-hidden="true"><use href="#i-upload"/></svg>Завантажити модель…
+                <input type="file" id="fileModel" accept=".json,application/json">
+              </label>
+            </div>
+          </form>
+
+          <div class="output">
+            <div class="progress" id="progTrain" data-state="idle">
+              <div class="progress-head">
+                <span class="progress-title">Навчання (епохи)</span>
+                <span class="progress-text">Очікує запуску</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Прогрес навчання за епохами" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="out-head">
+              <h3>Динаміка навчання</h3>
+              <div class="actions">
+                <div class="save-group">
+                  <label class="sr-only" for="chartFormat">Формат зображення графіків</label>
+                  <select id="chartFormat" title="Формат зображення графіків">
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                    <option value="bmp">BMP</option>
+                  </select>
+                  <button type="button" class="btn" id="btnSaveCharts" disabled>
+                    <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти графіки
+                  </button>
+                </div>
+                <button type="button" class="icon-btn" id="btnModelInfo" title="Інформація про модель" aria-label="Інформація про модель">
+                  <svg aria-hidden="true"><use href="#i-info"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="viz-grid">
+              <figure class="viz">
+                <figcaption>Помилка навчання (MSE) <small>логарифмічна шкала</small></figcaption>
+                <div class="canvas-wrap">
+                  <canvas id="errorCanvas" class="chart-canvas" role="img" aria-label="Графік помилки навчання за епохами"></canvas>
+                  <div class="placeholder" id="errorEmpty">
+                    <svg aria-hidden="true"><use href="#i-chart"/></svg>
+                    <span><strong>Графік помилки</strong><br>будується під час навчання після кожної епохи</span>
+                  </div>
+                  <div class="chart-tip" id="errorTip" hidden></div>
+                </div>
+              </figure>
+              <figure class="viz">
+                <figcaption>Точність класифікації, %</figcaption>
+                <div class="legend" aria-hidden="true">
+                  <span><i class="line-key accent"></i>Тестова вибірка</span>
+                  <span><i class="line-key deemph"></i>Навчальна вибірка</span>
+                </div>
+                <div class="canvas-wrap">
+                  <canvas id="accCanvas" class="chart-canvas" style="height:178px" role="img" aria-label="Графік точності на навчальній і тестовій вибірках"></canvas>
+                  <div class="placeholder" id="accEmpty">
+                    <svg aria-hidden="true"><use href="#i-chart"/></svg>
+                    <span><strong>Графік точності</strong><br>на навчальній і тестовій вибірках</span>
+                  </div>
+                  <div class="chart-tip" id="accTip" hidden></div>
+                </div>
+              </figure>
+            </div>
+
+            <details class="more" id="historyDetails">
+              <summary>Таблиця значень навчання</summary>
+              <div class="table-wrap">
+                <table class="data">
+                  <thead><tr><th>Епоха</th><th>Помилка (MSE)</th><th>Точність: навч., %</th><th>Точність: тест, %</th></tr></thead>
+                  <tbody id="historyBody"><tr><td colspan="4" style="text-align:left;color:var(--muted)">Дані з'являться після навчання</td></tr></tbody>
+                </table>
+              </div>
+            </details>
+
+            <div class="progress" id="progEval" data-state="idle">
+              <div class="progress-head">
+                <span class="progress-title">Оцінювання тестової вибірки</span>
+                <span class="progress-text">Очікує навчання</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Прогрес оцінювання тестової вибірки" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div id="metrics">
+              <div class="placeholder" style="min-height: 96px">
+                <span><strong>Результати оцінювання</strong><br>точність, чутливість, специфічність і матриця помилок з'являться після навчання</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ КРОК 3. РОЗПІЗНАВАННЯ -->
+      <section class="card step" id="step3" aria-labelledby="step3Title">
+        <header class="step-head">
+          <span class="step-num" aria-hidden="true">3</span>
+          <div>
+            <h2 id="step3Title">Розпізнавання послідовності</h2>
+            <p>Довша послідовність аналізується ковзним вікном по K значень, результати вікон усереднюються</p>
+          </div>
+        </header>
+        <div class="step-body stacked">
+          <form id="formRecognize" class="controls" novalidate>
+            <div class="form-errors" id="errRecognize" role="alert" hidden></div>
+            <div class="recognize-bar">
+              <div class="field">
+                <label for="seqInput">Послідовність для розпізнавання</label>
+                <input id="seqInput" type="text" autocomplete="off" spellcheck="false" placeholder="напр.: 72, 68, 75, 71, 69, 73, 70, 68, 74">
+              </div>
+              <div class="field">
+                <span class="label" id="unitsLabel">Одиниці</span>
+                <div class="segmented" role="radiogroup" aria-labelledby="unitsLabel">
+                  <label><input type="radio" name="units" value="bpm" checked><span>ЧСС, уд/хв</span></label>
+                  <label><input type="radio" name="units" value="ms"><span>RR, мс</span></label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btnRecognize" disabled>
+                <svg aria-hidden="true"><use href="#i-pulse"/></svg>Розпізнати
+              </button>
+            </div>
+            <div class="toolbar">
+              <div class="chips" role="group" aria-label="Заповнити поле прикладом">
+                <button type="button" class="chip" data-example="normal"><i class="swatch swatch-normal"></i>Приклад зі статті: норма</button>
+                <button type="button" class="chip" data-example="irregular"><i class="swatch swatch-arr"></i>Приклад зі статті: аритмія</button>
+                <button type="button" class="chip" data-example="brady">Брадикардія (стаття)</button>
+                <button type="button" class="chip" data-example="tachy">Тахікардія (стаття)</button>
+                <button type="button" class="chip" data-random="normal"><i class="swatch swatch-normal"></i>Випадкова норма</button>
+                <button type="button" class="chip" data-random="arrhythmia"><i class="swatch swatch-arr"></i>Випадкова аритмія</button>
+              </div>
+              <label class="btn file-btn" id="lblFileSeq" title="Прочитати числа з текстового файлу">
+                <svg aria-hidden="true"><use href="#i-upload"/></svg>Завантажити з файлу (.txt, .csv)…
+                <input type="file" id="fileSeq" accept=".txt,.csv,text/plain,text/csv">
+              </label>
+            </div>
+            <small class="hint" id="recognizeHint">Щоб розпізнати ритм, спочатку навчіть або завантажте модель (крок 2). Візуалізацію введеної послідовності видно одразу.</small>
+          </form>
+
+          <div class="output">
+            <div class="out-head">
+              <h3>Зображення результату</h3>
+              <div class="actions">
+                <div class="save-group">
+                  <label class="sr-only" for="imgFormat">Формат зображення</label>
+                  <select id="imgFormat" title="Формат зображення">
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                    <option value="bmp">BMP</option>
+                  </select>
+                  <button type="button" class="btn" id="btnSaveImage" disabled>
+                    <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти зображення
+                  </button>
+                </div>
+                <button type="button" class="btn" id="btnSaveResult" disabled>
+                  <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти результат (.txt)
+                </button>
+                <button type="button" class="icon-btn" id="btnImageInfo" title="Інформація про зображення" aria-label="Інформація про зображення">
+                  <svg aria-hidden="true"><use href="#i-info"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="result-wrap is-empty" id="resultWrap">
+              <canvas id="resultCanvas" class="result-canvas" width="1400" height="800" role="img" aria-label="Зображення ЕКГ-смужки та результату класифікації"></canvas>
+              <div class="placeholder" id="resultEmpty">
+                <svg aria-hidden="true"><use href="#i-pulse"/></svg>
+                <span><strong>Тут з'явиться ЕКГ-смужка введеної послідовності</strong><br>R-зубці, інтервали між ними, гістограма інтервалів і результат класифікації.<br>Введіть числа або оберіть приклад вище.</span>
+              </div>
+            </div>
+            <div id="resultSummary" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================ ЖУРНАЛ -->
+    <aside class="card log-panel" aria-labelledby="logTitle">
+      <div class="log-head">
+        <h2 id="logTitle">Журнал операцій</h2>
+        <span class="badge" id="logCount" title="Кількість записів">0</span>
+      </div>
+      <div class="log-body">
+        <ol class="log-list" id="logList"></ol>
+        <div class="placeholder" id="logEmpty">
+          <svg aria-hidden="true"><use href="#i-list"/></svg>
+          <span><strong>Журнал порожній</strong><br>тут фіксуються всі дії: генерація, навчання, оцінювання, розпізнавання, збереження та помилки</span>
+        </div>
+      </div>
+      <div class="log-foot">
+        <button type="button" class="btn" id="btnSaveLog" disabled>
+          <svg aria-hidden="true"><use href="#i-download"/></svg>Зберегти журнал (.txt)
+        </button>
+        <button type="button" class="btn btn-quiet" id="btnClearLog" disabled>Очистити</button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ============================================ ДІАЛОГ «ІНФОРМАЦІЯ» -->
+  <dialog class="dialog" id="dlgInfo" aria-labelledby="dlgInfoTitle">
+    <form method="dialog" class="dialog-inner">
+      <header class="dialog-head">
+        <h2 id="dlgInfoTitle"><svg aria-hidden="true"><use href="#i-info"/></svg>Інформація</h2>
+        <button class="icon-btn" value="close" aria-label="Закрити">✕</button>
+      </header>
+      <div class="dialog-body" id="infoBody"></div>
+      <footer class="dialog-foot">
+        <button class="btn btn-primary" value="close">Закрити</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- ============================================ ДІАЛОГ «ДОВІДКА» -->
+  <dialog class="dialog" id="dlgHelp" aria-labelledby="dlgHelpTitle">
+    <form method="dialog" class="dialog-inner">
+      <header class="dialog-head">
+        <h2 id="dlgHelpTitle"><svg aria-hidden="true"><use href="#i-help"/></svg>Довідка</h2>
+        <button class="icon-btn" value="close" aria-label="Закрити">✕</button>
+      </header>
+      <div class="dialog-body help">
+        <h3>Порядок роботи</h3>
+        <ol>
+          <li><strong>Генерація даних.</strong> Задайте кількість послідовностей і параметри класів, натисніть «Згенерувати дані». Набір можна зберегти (CSV/JSON) і пізніше завантажити.</li>
+          <li><strong>Навчання.</strong> Задайте кількість епох, швидкість навчання, момент і розмір прихованих шарів, натисніть «Навчити мережу». Прогрес-бар оновлюється після кожної епохи, графіки показують помилку й точність. Навчання можна зупинити.</li>
+          <li><strong>Оцінювання.</strong> Після навчання мережа автоматично перевіряється на тестовій вибірці: точність, чутливість, специфічність, матриця помилок.</li>
+          <li><strong>Розпізнавання.</strong> Введіть послідовність ЧСС (або RR-інтервали в мс) чи оберіть приклад і натисніть «Розпізнати». Зображення результату можна зберегти у форматах PNG, JPG або BMP, а текстовий результат — у .txt.</li>
+          <li><strong>Журнал.</strong> Усі дії записуються в журнал праворуч; його можна зберегти у файл .txt.</li>
+        </ol>
+
+        <h3>Як генеруються дані</h3>
+        <p><strong>Нормальний ритм</strong>, формула (4): для кожної послідовності</p>
+        <span class="formula">Tmax = random(60…100) уд/хв;  Tmin = Tmax − random(Tol)
+кожне значення послідовності — випадково Tmax або Tmin</span>
+        <p><strong>Аритмія</strong>, формула (5): інтервали між R-зубцями</p>
+        <span class="formula">Tcurrent = Tmin + random · (Tmax − Tmin),  Tmin = 60000 / ЧССmax,  Tmax = 60000 / ЧССmin  (мс)</span>
+        <p>Послідовність аритмії, розкид якої (max − min) менший за «мін. розкид», відкидається і генерується заново — так у класі «аритмія» немає випадково регулярних прикладів.</p>
+
+        <h3>Нейронна мережа</h3>
+        <ul>
+          <li>Вхід: K значень ЧСС, нормованих у діапазон [0; 1]: <code>x = (ЧСС − min) / (max − min)</code>, межі визначаються за навчальними даними.</li>
+          <li>Вихід: 2 нейрони (норма, аритмія) із сигмоїдною активацією; відсоток впевненості — нормовані виходи.</li>
+          <li>Навчання: метод зворотного поширення помилки (brain.js), вибірка перемішується перед кожною епохою.</li>
+          <li>Послідовність, довша за K, аналізується ковзним вікном; підсумок — середнє ймовірностей усіх вікон.</li>
+        </ul>
+
+        <h3>Обмеження</h3>
+        <p>Модель розрізняє лише два класи. Регулярний ритм із ЧСС поза межами 60–100 уд/хв (бради- чи тахікардія) мережа віднесе до класу з рівними інтервалами — застосунок показує про це попередження.</p>
+      </div>
+      <footer class="dialog-foot">
+        <button class="btn btn-primary" value="close">Зрозуміло</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="sr-only" id="srLive" aria-live="polite"></div>
+
+  <script src="lib/brain-browser.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/rng.js"></script>
+  <script src="js/logger.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ecg-render.js"></script>
+  <script src="js/image-export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
