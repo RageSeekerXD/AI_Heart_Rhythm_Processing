@@ -82,7 +82,14 @@
     ctx.fill();
     ctx.clip();
 
-    // міліметрова сітка: дрібні лінії — 1 мм, великі — 5 мм (0,2 с)
+    // крок підписів секунд: щонайменше ~42 px між підписами, щоб вони не накладалися
+    ctx.font = font(13);
+    const secLabelW = ctx.measureText('000 с').width + 12;
+    const secStep = [1, 2, 5, 10, 15, 20, 30, 60].find((s) => s * pxPerSec >= secLabelW) || 60;
+
+    // міліметрова сітка: дрібні лінії — 1 мм, великі — 5 мм (0,2 с); для дуже
+    // довгої послідовності (клітинки вужчі за 6 px) — сітка з кроком підписів секунд
+    const fineGrid = pxPerMm * 5 >= 6;
     ctx.lineWidth = 1;
     const drawGrid = (stepPx, color) => {
       ctx.strokeStyle = color;
@@ -98,7 +105,7 @@
       ctx.stroke();
     };
     if (pxPerMm >= 4) drawGrid(pxPerMm, ECG.minor);
-    drawGrid(pxPerMm * 5, ECG.major);
+    drawGrid(fineGrid ? pxPerMm * 5 : pxPerSec * secStep, ECG.major);
 
     // крива ЕКГ
     ctx.strokeStyle = ECG.trace;
@@ -119,14 +126,25 @@
     }
     ctx.stroke();
 
-    // номери R-зубців і червоні мітки над ними (як на рисунках статті)
+    // номери R-зубців і червоні мітки над ними (як на рисунках статті). Якщо
+    // зубці густі, підписується кожен 2-й, 5-й, 10-й… і лише там, де номер не
+    // наклався б на попередній; мітка ставиться над кожним зубцем
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.font = font(17, 650);
+    const minGap = Math.min(...rr) * pxPerSec;
+    const numberW = ctx.measureText(String(rTimes.length)).width + 8;
+    const numberStep = [1, 2, 5, 10, 20, 25, 50, 100].find((s) => s * minGap >= numberW) || 100;
+    let lastRight = -Infinity;
     rTimes.forEach((t, i) => {
       const x = tx(t);
-      ctx.fillStyle = C.ink;
-      ctx.fillText(String(i + 1), x, box.y + 8);
+      const n = String(i + 1);
+      const half = ctx.measureText(n).width / 2;
+      if ((i === 0 || (i + 1) % numberStep === 0) && x - half >= lastRight + 4) {
+        ctx.fillStyle = C.ink;
+        ctx.fillText(n, x, box.y + 8);
+        lastRight = x + half;
+      }
       ctx.strokeStyle = ECG.marker;
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -176,16 +194,14 @@
     ctx.fillStyle = C.muted;
     ctx.font = font(13);
     ctx.textBaseline = 'top';
-    const caption = labelFormat === labelFormats[2]
-      ? '25 мм/с · клітинка 0,04 с · підписи інтервалів — ЧСС, уд/хв'
-      : '25 мм/с · клітинка 0,04 с';
+    const caption = `25 мм/с · ${fineGrid ? 'клітинка 0,04 с' : `сітка ${secStep} с`}`
+      + `${labelFormat === labelFormats[2] ? ' · підписи інтервалів — ЧСС, уд/хв' : ''}`;
     ctx.textAlign = 'right';
     ctx.fillText(caption, box.x + box.w, box.y + box.h + 6);
     const captionLeft = box.x + box.w - ctx.measureText(caption).width - 14;
     ctx.textAlign = 'center';
     const lastSecond = Math.floor(rTimes[rTimes.length - 1]);
-    const everySec = pxPerSec < 60 ? 2 : 1;
-    for (let s = 0; s <= lastSecond; s += everySec) {
+    for (let s = 0; s <= lastSecond; s += secStep) {
       const label = `${s} с`;
       if (tx(s) + ctx.measureText(label).width / 2 > captionLeft) break;
       ctx.fillText(label, tx(s), box.y + box.h + 6);

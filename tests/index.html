@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тести - Розпізнавання серцевого ритму (ЛР4)</title>
+  <link rel="stylesheet" href="lib/mocha.css">
+  <style>
+    body { font-family: "Segoe UI", system-ui, sans-serif; margin: 0; padding: 0 0 40px; background: #fff; color: #1d1c1a; }
+    .top { padding: 18px 32px 6px; border-bottom: 1px solid #e6e4dd; }
+    .top h1 { font-size: 22px; margin: 0 0 4px; }
+    .top p { margin: 0 0 8px; color: #55534c; font-size: 14px; }
+    #summary { font-size: 15px; font-weight: 600; margin: 6px 0 10px; }
+    #summary.ok { color: #1b6e3a; }
+    #summary.fail { color: #b3261e; }
+    #mocha { margin: 20px 32px; }
+    #mocha .test.pass .duration { background: #8a8780; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>Модульні та інтеграційні тести застосунку</h1>
+    <p>Mocha 10.8.2 + Chai 4.5.0. Тести підключають ті самі файли, що й застосунок (папка Application), і викликають їхні функції напряму.
+      Фільтр: <code>?grep=текст</code>. Наскрізні (E2E) тести запускає <code>tests\run-tests.ps1</code>.</p>
+    <div id="summary">Виконання…</div>
+  </div>
+  <div id="mocha"></div>
+
+  <!-- код застосунку (без app.js, який прив'язаний до елементів сторінки застосунку) -->
+  <script src="../Application/lib/brain-browser.js"></script>
+  <script src="../Application/js/util.js"></script>
+  <script src="../Application/js/rng.js"></script>
+  <script src="../Application/js/logger.js"></script>
+  <script src="../Application/js/generator.js"></script>
+  <script src="../Application/js/model.js"></script>
+  <script src="../Application/js/charts.js"></script>
+  <script src="../Application/js/ecg-render.js"></script>
+  <script src="../Application/js/image-export.js"></script>
+
+  <!-- інструменти тестування -->
+  <script src="lib/mocha.js"></script>
+  <script src="lib/chai.js"></script>
+  <script>
+    mocha.setup({ ui: 'bdd', timeout: 30000, slow: 400 });
+    mocha.checkLeaks();
+    window.expect = chai.expect;
+  </script>
+  <script src="helpers.js"></script>
+
+  <!-- модульні тести -->
+  <script src="unit/util.spec.js"></script>
+  <script src="unit/rng.spec.js"></script>
+  <script src="unit/generator.spec.js"></script>
+  <script src="unit/dataset-io.spec.js"></script>
+  <script src="unit/model.spec.js"></script>
+  <script src="unit/image-export.spec.js"></script>
+  <script src="unit/render.spec.js"></script>
+  <script src="unit/logger.spec.js"></script>
+  <!-- інтеграційні тести -->
+  <script src="integration/pipeline.spec.js"></script>
+  <script src="integration/files.spec.js"></script>
+
+  <script src="report.js"></script>
+</body>
+</html>

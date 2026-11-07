@@ -1,0 +1,26 @@
+{
+ "startedAt": "2026-11-07T19:50:10",
+ "browser": {
+  "v8": "15.6.75.27",
+  "headless": true,
+  "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "product": "Chrome/156.0.8078.81"
+ },
+ "suite": "all",
+ "grep": "",
+ "unit": {
+  "tests": 171,
+  "passed": 171,
+  "failed": 0,
+  "pending": 0
+ },
+ "unitDurationMs": 32438,
+ "e2e": {
+  "tests": 37,
+  "passed": 37,
+  "failed": 0
+ },
+ "durationSec": 114,
+ "failed": 0
+}

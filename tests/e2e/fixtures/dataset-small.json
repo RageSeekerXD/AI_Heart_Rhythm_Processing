@@ -1,0 +1,16 @@
+{"format": "hr-rhythm-dataset", "version": 1, "units": "bpm", "windowSize": 4,
+ "samples": [
+  {"id": 1, "label": "normal", "split": "train", "bpm": [79,79,84,79]},
+  {"id": 2, "label": "arrhythmia", "split": "train", "bpm": [64,86,51,92]},
+  {"id": 3, "label": "normal", "split": "train", "bpm": [96,93,93,93]},
+  {"id": 4, "label": "arrhythmia", "split": "train", "bpm": [51,52,60,82]},
+  {"id": 5, "label": "normal", "split": "train", "bpm": [66,66,66,66]},
+  {"id": 6, "label": "arrhythmia", "split": "train", "bpm": [58,72,96,61]},
+  {"id": 7, "label": "normal", "split": "train", "bpm": [72,77,77,77]},
+  {"id": 8, "label": "arrhythmia", "split": "train", "bpm": [62,93,84,78]},
+  {"id": 9, "label": "normal", "split": "train", "bpm": [78,78,81,78]},
+  {"id": 10, "label": "arrhythmia", "split": "train", "bpm": [93,73,63,103]},
+  {"id": 11, "label": "normal", "split": "train", "bpm": [84,84,90,84]},
+  {"id": 12, "label": "arrhythmia", "split": "train", "bpm": [70,60,102,95]}
+ ]
+}

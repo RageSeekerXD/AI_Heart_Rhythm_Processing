@@ -1,0 +1,1 @@
+{"format": "hr-rhythm-model", "version": 1, "windowSize": 4, "hiddenLayers": [8], "encoding": {"min": 130, "max": 40}, "network": {"type": "NeuralNetwork", "sizes": [4, 8, 2], "layers": []}}

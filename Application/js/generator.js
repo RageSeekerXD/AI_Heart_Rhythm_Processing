@@ -47,6 +47,10 @@
     }
     if (!isInt(p.tolerance) || p.tolerance < 0 || p.tolerance > 30) {
       fail(['tol'], 'Допуск Tol(r) — ціле число від 0 до 30 уд/хв.');
+    } else if (isInt(p.normMin) && p.normMin >= 30 && p.normMin - p.tolerance < BPM_LIMITS.min) {
+      // Tmin = Tmax − random(Tol) може опуститися до normMin − Tol; такі ЧСС неможливі
+      // і не проходять перевірку під час завантаження набору з файлу
+      fail(['normMin', 'tol'], `Мінімальна ЧСС норми мінус допуск Tol(r) (${p.normMin} − ${p.tolerance} = ${p.normMin - p.tolerance}) менша за ${BPM_LIMITS.min} уд/хв. Збільште мінімальну ЧСС норми або зменште допуск.`);
     }
     if (![p.arrMin, p.arrMax].every(isInt) || p.arrMin < 30 || p.arrMax > 220) {
       fail(['arrMin', 'arrMax'], 'Межі ЧСС аритмії — цілі числа від 30 до 220 уд/хв.');
@@ -123,14 +127,21 @@
     return { id, label, bpm, split, mean: mean(bpm), spread: spread(bpm) };
   }
 
-  // Стратифіковане розбиття: в обох вибірках однакова частка кожного класу
+  // Стратифіковане розбиття: в обох вибірках однакова частка кожного класу.
+  // Кожен клас (якщо в ньому щонайменше 2 зразки) має хоча б один приклад
+  // і в навчальній, і в тестовій вибірці - навіть для частки 0 або 1.
   function stratifiedSplit(samples, testFraction, rng) {
     for (const label of CLASSES) {
       const ofClass = rng.shuffle(samples.filter((s) => s.label === label));
-      const testCount = Math.round(ofClass.length * testFraction);
+      let testCount = Math.round(ofClass.length * testFraction);
+      if (ofClass.length >= 2) testCount = Math.min(ofClass.length - 1, Math.max(1, testCount));
       ofClass.forEach((s, i) => { s.split = i < testCount ? 'test' : 'train'; });
     }
   }
+
+  // Розбиття з файлу придатне, лише якщо кожен клас є в обох вибірках
+  const splitIsUsable = (samples) => CLASSES.every((label) => ['train', 'test']
+    .every((split) => samples.some((s) => s.label === label && s.split === split)));
 
   function computeStats(samples) {
     const byClass = {};
@@ -346,16 +357,19 @@
       }
     }
 
+    // розбиття з файлу без навчальних або тестових прикладів якогось класу
+    // (напр., усі рядки позначено test) непридатне - виконується автоматично
     const rng = new HR.Random();
-    if (!hasSplit) stratifiedSplit(samples, testFraction, rng);
-    if (!samples.some((s) => s.split === 'test')) stratifiedSplit(samples, testFraction, rng);
+    const splitFromFile = hasSplit && splitIsUsable(samples);
+    if (!splitFromFile) stratifiedSplit(samples, testFraction, rng);
 
     return assembleDataset(samples, {
       source: 'file',
       params: meta && meta.params ? meta.params : null,
       seed: meta && Number.isInteger(meta.seed) ? meta.seed : null,
       rejected: null,
-      splitFromFile: hasSplit,
+      splitFromFile,
+      splitIgnored: hasSplit && !splitFromFile,
     }, rng);
   }
 

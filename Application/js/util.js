@@ -70,16 +70,18 @@
     return value.toExponential(2).replace('.', ',');
   }
 
+  // Одиниця вибирається за вже округленим значенням: 1 048 575 Б - «1,00 МБ», а не «1 024,0 КБ»
   function formatBytes(bytes) {
     if (!Number.isFinite(bytes)) return '—';
     if (bytes < 1024) return `${bytes} Б`;
-    if (bytes < 1024 * 1024) return `${fmtNum(bytes / 1024, 1)} КБ`;
+    if (Math.round((bytes / 1024) * 10) < 1024 * 10) return `${fmtNum(bytes / 1024, 1)} КБ`;
     return `${fmtNum(bytes / (1024 * 1024), 2)} МБ`;
   }
 
+  // 999,6 мс - «1,00 с», а не «1 000 мс»
   function formatDuration(ms) {
     if (!Number.isFinite(ms)) return '—';
-    if (ms < 1000) return `${fmtNum(ms, 0)} мс`;
+    if (Math.round(ms) < 1000) return `${fmtNum(ms, 0)} мс`;
     return `${fmtNum(ms / 1000, 2)} с`;
   }
 

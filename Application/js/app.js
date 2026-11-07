@@ -392,18 +392,29 @@
     const file = el.fileData.files[0];
     el.fileData.value = '';
     if (!file || state.busy) return;
+    // частка тестової вибірки потрібна, якщо у файлі немає придатного розбиття;
+    // поза межами 5–50 % одна з вибірок могла б виявитися порожньою
+    const testPct = num(el.testPct);
+    if (!Number.isFinite(testPct) || testPct < 5 || testPct > 50) {
+      const text = 'Частка тестової вибірки — від 5 до 50 %. Її використано для розбиття набору, якщо у файлі розбиття немає.';
+      showFormErrors(el.errData, dataInputs, [{ fields: ['testPct'], text }]);
+      log.error(`Набір даних «${file.name}» не завантажено: ${text}`);
+      return;
+    }
+    showFormErrors(el.errData, dataInputs, []);
     log.info(`Завантаження набору даних з файлу ${file.name} (${formatBytes(file.size)})…`);
     try {
       const text = await file.text();
-      const testPct = Number.isFinite(num(el.testPct)) ? num(el.testPct) : 20;
       const ds = HR.data.parseDatasetFile(text, file.name, testPct / 100);
       ds.fileName = file.name;
       rememberFile(file, 'набір даних', `${seqCount(ds.stats.total)}, K = ${ds.windowSize}`);
       el.seqLen.value = String(Math.min(12, ds.windowSize));
       setDataset(ds);
       setProgress(el.progData, 1, `Завантажено з файлу: ${seqCount(ds.stats.total)}`, 'done');
-      log.success(`Набір даних завантажено: ${file.name} — ${seqCount(ds.stats.total)} (норма ${ds.stats.byClass.normal.count}, аритмія ${ds.stats.byClass.arrhythmia.count}), K = ${ds.windowSize}; `
-        + `${ds.splitFromFile ? 'розбиття на вибірки взято з файлу' : `розбиття виконано автоматично (тестова ${testPct} %)`}.`);
+      const split = ds.splitFromFile
+        ? 'розбиття на вибірки взято з файлу'
+        : `розбиття виконано автоматично (тестова ${testPct} %)${ds.splitIgnored ? ', бо у файлі немає навчальних або тестових прикладів одного з класів' : ''}`;
+      log.success(`Набір даних завантажено: ${file.name} — ${seqCount(ds.stats.total)} (норма ${ds.stats.byClass.normal.count}, аритмія ${ds.stats.byClass.arrhythmia.count}), K = ${ds.windowSize}; ${split}.`);
     } catch (err) {
       log.error(`Не вдалося завантажити набір даних «${file.name}»: ${err.message}`);
       setProgress(el.progData, 1, 'Помилка завантаження файлу', 'error');
@@ -867,8 +878,15 @@
     el.resultEmpty.hidden = !isEmpty;
   }
 
+  // Відкладене оновлення попереднього перегляду під час введення (див. bindEvents)
+  let previewTimer = null;
+
   // Показує введену послідовність на зображенні без класифікації
   function updatePreview({ quiet = true } = {}) {
+    // відкладене оновлення після цього вже застаріле: якби воно спрацювало
+    // після розпізнавання (Enter одразу після введення), то стерло б результат
+    clearTimeout(previewTimer);
+    previewTimer = null;
     const text = el.seqInput.value;
     state.lastResult = null;
     renderSummary();
@@ -1320,7 +1338,6 @@
       if (state.busy === 'train') return;
       recognizePreview(true);
     });
-    let previewTimer = null;
     el.seqInput.addEventListener('input', () => {
       clearTimeout(previewTimer);
       previewTimer = setTimeout(() => updatePreview({ quiet: true }), 300);

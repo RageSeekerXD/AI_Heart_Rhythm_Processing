@@ -1,0 +1,6 @@
+label,bpm_1,bpm_2,bpm_3,bpm_4
+normal,72,70,72,70
+maybe,70,72,70,72
+arrhythmia,60,abc,70,110
+normal,15,70,72,70
+arrhythmia,60,95,70

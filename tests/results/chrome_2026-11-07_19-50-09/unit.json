@@ -1,0 +1,1422 @@
+{
+ "startedAt": "2026-11-07T17:50:10.242Z",
+ "durationMs": 32438,
+ "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+ "totals": {
+  "tests": 171,
+  "passed": 171,
+  "failed": 0,
+  "pending": 0
+ },
+ "facts": {
+  "labels200": {
+   "numbers": 21,
+   "seconds": 28
+  },
+  "accuracy": 1,
+  "recall": 1,
+  "specificity": 1,
+  "confusion": {
+   "tp": 100,
+   "tn": 100,
+   "fp": 0,
+   "fn": 0
+  },
+  "finalError": 0.00026016470440285756,
+  "stability": {
+   "min": 1,
+   "median": 1,
+   "max": 1,
+   "all": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "articleNormal": 0.9981560126602661,
+  "articleIrregular": 0.9996902263109508,
+  "randomCorrect": 50,
+  "accuracyK8": 0.95,
+  "imageSize_png": 148458,
+  "imageSize_jpg": 271061,
+  "imageSize_bmp": 3360054,
+  "accuracyFromFile": 0.975
+ },
+ "tests": [
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "clamp обмежує значення межами і не змінює значення всередині",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "mean, sum, spread рахують середнє, суму і розкид; mean порожнього масиву - NaN",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "argmax повертає індекс першого найбільшого елемента",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "bpmToMs і msToBpm - взаємно обернені перетворення ЧСС ↔ RR-інтервал",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "fmtNum форматує числа за українськими правилами, нечислові значення - «—»",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "fmtPct і fmtDec: відсотки з одним знаком, десяткові без зайвих нулів",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "plural вибирає правильну форму іменника (1, 2–4, 5–20, 21, 111)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "fmtError показує помилку MSE: великі значення - 4 знаки, малі - в експоненційному записі",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "formatBytes: Б, КБ, МБ на межах 1024 і 1024²",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "formatBytes: значення, яке після округлення дорівнює 1024 КБ, показується в МБ (межовий випадок)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "formatDuration: мілісекунди до 1 с, далі секунди з двома знаками",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "formatDuration: 999,6 мс після округлення показується як «1,00 с», а не «1 000 мс» (межовий випадок)",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "fileExtension повертає розширення в нижньому регістрі або порожній рядок",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "fileStamp, formatTime, formatDateTime мають фіксований формат з ведучими нулями",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › util.js - допоміжні функції",
+   "title": "nextFrame віддає керування браузеру і завершується (запасний таймер ≤ 120 мс)",
+   "state": "passed",
+   "durationMs": 11,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "однакове зерно дає однакову послідовність чисел (відтворюваність набору)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "різні зерна дають різні послідовності",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "next() повертає числа в [0; 1), середнє близьке до 0,5",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "int(min, max) повертає цілі числа включно з обома межами",
+   "state": "passed",
+   "durationMs": 51,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "float(min, max) повертає числа в [min; max)",
+   "state": "passed",
+   "durationMs": 24,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "shuffle - перестановка: ті самі елементи, інший порядок, відтворювано за зерном",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "зерно приводиться до 32-бітного беззнакового цілого; MAX_SEED = 4294967295 допустиме",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › rng.js - відтворюваний генератор mulberry32",
+   "title": "randomSeed() - ціле число від 0 до 10⁹, щоразу нове",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "типові параметри застосунку коректні: без помилок і попереджень",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "мінімальні допустимі значення всіх полів приймаються (граничний випадок)",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "максимальні допустимі значення всіх полів приймаються (граничний випадок)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле perClass: {\"perClass\":9}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле perClass: {\"perClass\":5001}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле perClass: {\"perClass\":10.5}",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле perClass: {\"perClass\":NaN}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seqLen: {\"length\":2}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seqLen: {\"length\":13}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле testPct: {\"testPct\":4.9}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле testPct: {\"testPct\":50.1}",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле testPct: {\"testPct\":NaN}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле normMin: {\"normMin\":29}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле normMax: {\"normMax\":201}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле normMin: {\"normMin\":100,\"normMax\":100}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле tol: {\"tolerance\":-1}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле tol: {\"tolerance\":31}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле tol: {\"tolerance\":2.5}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле arrMin: {\"arrMin\":29}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле arrMax: {\"arrMax\":221}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле arrMin: {\"arrMin\":120,\"arrMax\":50}",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле minSpread: {\"minSpread\":0}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле minSpread: {\"minSpread\":101}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле minSpread: {\"arrMin\":60,\"arrMax\":70,\"minSpread\":15}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seed: {\"seed\":-1}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seed: {\"seed\":4294967296}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seed: {\"seed\":1.5}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "значення поза межами відхиляється і підсвічується поле seed: {\"seed\":NaN}",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "нижня межа норми мінус допуск Tol(r) не може бути меншою за 20 уд/хв (інакше генеруються нефізіологічні ЧСС)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "попереджає, якщо мінімальний розкид аритмії не більший за допуск норми (класи перекриваються)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - перевірка параметрів validateParams()",
+   "title": "порожнє зерно (null) допустиме - тоді воно вибирається випадково",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "формула (4): нормальний ритм містить лише Tmax і Tmin, значення в [normMin − Tol; normMax], Tmax − Tmin ≤ Tol(r)",
+   "state": "passed",
+   "durationMs": 82,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "формула (4) з Tol(r) = 0 дає ідеально рівний ритм",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "формула (5): аритмія - цілі ЧСС у межах [arrMin; arrMax] з розкидом ≥ мінімального",
+   "state": "passed",
+   "durationMs": 62,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "формула (5): недосяжний розкид дає зрозумілу помилку, а не зависання",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "exampleSeries: у довгій послідовності аритмії кожне вікно з K значень нерегулярне",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: 2N послідовностей, по N кожного класу, стратифіковане розбиття за часткою тестової вибірки",
+   "state": "passed",
+   "durationMs": 266,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: однакове зерно - однаковий набір і розбиття; інше зерно - інший набір",
+   "state": "passed",
+   "durationMs": 831,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: без зерна вибирає випадкове і записує його в набір",
+   "state": "passed",
+   "durationMs": 110,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: прогрес-бар отримує зростаючі значення і завершується на 100 %",
+   "state": "passed",
+   "durationMs": 278,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: мінімальний набір (N = 10, частка 5 %) - у тестовій вибірці є приклади обох класів",
+   "state": "passed",
+   "durationMs": 110,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: максимальна частка 50 % ділить кожен клас навпіл",
+   "state": "passed",
+   "durationMs": 122,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "buildDataset: статистика набору узгоджена з самими зразками",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"length\":3} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"length\":12} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"normMin\":30,\"normMax\":31,\"tolerance\":0} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"normMin\":30,\"normMax\":200,\"tolerance\":30} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"normMin\":40,\"tolerance\":30} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"normMin\":199,\"normMax\":200,\"tolerance\":30} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"arrMin\":30,\"arrMax\":220,\"minSpread\":100} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 278,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - формули (4) і (5) та генерація набору",
+   "title": "параметри {\"arrMin\":30,\"arrMax\":36,\"minSpread\":1} або відхиляються перевіркою, або дають ЧСС у межах 20–300 уд/хв",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - експорт набору даних у CSV і JSON",
+   "title": "datasetToCsv: заголовок id,label,split,bpm_1..bpm_K, рядки через CRLF, один рядок на зразок",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - експорт набору даних у CSV і JSON",
+   "title": "datasetToJson: формат hr-rhythm-dataset, версія, параметри, зерно і всі зразки",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "CSV із заголовком: K = 4, по 5 зразків класу, розбиття виконується автоматично",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "CSV з крапкою з комою і українськими назвами стовпців (клас; вибірка)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "файл з табуляцією як роздільником (TSV)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "CSV без заголовка: стовпець класу знаходиться за значенням (normal / arrhythmia)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "BOM, порожні рядки і коментарі (#) ігноруються",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "синоніми класів: Норма, АРИТМІЯ, N, a, 0, 1",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "JSON у форматі застосунку { samples: [{ label, bpm }] } і масив [{ class, values }]",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "розбиття з файлу використовується, якщо воно є в кожному рядку",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "невідоме значення вибірки в одному рядку - розбиття виконується автоматично",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "граничні ЧСС 20 і 300 уд/хв та граничні довжини K = 3 і K = 30 приймаються",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "кожен клас має приклади і в навчальній, і в тестовій вибірці, навіть якщо у файлі усі рядки позначено test",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "кожен клас має приклади і в навчальній, і в тестовій вибірці, навіть якщо у файлі аритмія лише в тестовій вибірці",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "частка тестової вибірки 0 % (поза межами поля 5–50 %) не залишає порожньої вибірки",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження коректних файлів parseDatasetFile()",
+   "title": "частка тестової вибірки 100 % (поза межами поля 5–50 %) не залишає порожньої вибірки",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "порожній файл і файл лише з коментарями",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "пошкоджений JSON і JSON без масиву samples",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "CSV без стовпця класу",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "невідомий клас - помилка з номером рядка",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "нечислове значення ЧСС",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "ЧСС за межами 20–300 уд/хв (19 і 301)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "рядки різної довжини",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "довжина послідовності K = 2 і K = 31 не підтримується",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "менше 5 зразків одного з класів (межа: 5 - достатньо, 4 - ні)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › generator.js - завантаження некоректних файлів (негативні сценарії)",
+   "title": "багато помилок: показується кількість і перші п’ять",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - кодування входів і виходів, архітектура",
+   "title": "encodingFor: межі нормування з запасом 10 уд/хв, округлені до десятків",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - кодування входів і виходів, архітектура",
+   "title": "encode: мін-макс нормування в [0; 1] з обмеженням значень поза межами",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - кодування входів і виходів, архітектура",
+   "title": "target: унітарне кодування - норма [1, 0], аритмія [0, 1]",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - кодування входів і виходів, архітектура",
+   "title": "архітектура і кількість параметрів: 4–8–2 → 58, 4–12–6–2 → 152",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - класифікація вікна і ковзне вікно",
+   "title": "predictWindow: ймовірності нормуються до суми 1, клас - найбільша ймовірність",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - класифікація вікна і ковзне вікно",
+   "title": "predictWindow: нульові виходи мережі дають рівні ймовірності, а не NaN",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - класифікація вікна і ковзне вікно",
+   "title": "predictSeries: n значень → n − K + 1 вікон зі зсувом 1, ймовірності усереднюються",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - класифікація вікна і ковзне вікно",
+   "title": "predictSeries: рівно K значень - одне вікно (граничний випадок)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - класифікація вікна і ковзне вікно",
+   "title": "predictSeries: менше K значень - зрозуміла помилка",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "виконує задану кількість епох і записує історію помилки й точності",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "мінімальна кількість епох (1) - граничний випадок",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "зупинка користувачем: навчання переривається після поточної епохи",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "рання зупинка: досягнуто цільової помилки",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "викликає onEpoch для кожної епохи та onFrame хоча б раз (для прогрес-бару)",
+   "state": "passed",
+   "durationMs": 2,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - навчання train()",
+   "title": "порожня тестова вибірка не заважає навчанню (точність на тесті - NaN)",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - оцінювання evaluate() і метрики",
+   "title": "матриця помилок і метрики збігаються з розрахованими вручну",
+   "state": "passed",
+   "durationMs": 51,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - оцінювання evaluate() і метрики",
+   "title": "прогрес оцінювання завершується на (n, n)",
+   "state": "passed",
+   "durationMs": 55,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - оцінювання evaluate() і метрики",
+   "title": "граничний випадок: мережа ніколи не прогнозує аритмію - влучність і F1 = NaN без винятку",
+   "state": "passed",
+   "durationMs": 55,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - оцінювання evaluate() і метрики",
+   "title": "порожня тестова вибірка і невідповідна довжина вікна - зрозумілі помилки",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON()",
+   "title": "toJSON містить формат, архітектуру, нормування, історію і мережу brain.js",
+   "state": "passed",
+   "durationMs": 2338,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON()",
+   "title": "fromJSON(toJSON()) відновлює модель з ідентичними виходами мережі",
+   "state": "passed",
+   "durationMs": 2,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON() › некоректні файли моделі",
+   "title": "не об’єкт або інший формат файлу",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON() › некоректні файли моделі",
+   "title": "немає мережі або це інший тип мережі brain.js",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON() › некоректні файли моделі",
+   "title": "розміри шарів не відповідають опису моделі (K або кількість класів)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › model.js - збереження і завантаження моделі toJSON() / fromJSON() › некоректні файли моделі",
+   "title": "некоректні межі нормування (відсутні, min ≥ max)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "bmpSize: 54 Б заголовків + рядки, вирівняні до 4 байтів",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "encodeBmp: заголовки BITMAPFILEHEADER і BITMAPINFOHEADER для 24-бітного BMP",
+   "state": "passed",
+   "durationMs": 23,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "encodeBmp: рядки знизу вгору, порядок байтів B, G, R, нулі вирівнювання, прозорий піксель - білий",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "BMP, PNG і JPG декодуються браузером з тими самими розмірами",
+   "state": "passed",
+   "durationMs": 24,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "canvasToBlob: сигнатури файлів PNG (89 50 4E 47) і JPG (FF D8 FF), MIME-типи",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "JPG не має прозорості: прозорі ділянки стають білими, а не чорними",
+   "state": "passed",
+   "durationMs": 30,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "непідтримуваний формат (gif) - відхилена Promise з поясненням",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › image-export.js - кодування зображень",
+   "title": "FORMATS: розширення і підписи форматів для імен файлів",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "розмір зображення 1400 × 800, параметр scale змінює роздільну здатність (2 → 2800 × 1600)",
+   "state": "passed",
+   "durationMs": 17,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "без класифікації плашка результату сіра («НЕ КЛАСИФІКОВАНО»)",
+   "state": "passed",
+   "durationMs": 28,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "колір плашки відповідає класу: норма - синій, аритмія - помаранчевий",
+   "state": "passed",
+   "durationMs": 19,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "довжина смуг ймовірностей відповідає ймовірностям класів (90 % / 10 %)",
+   "state": "passed",
+   "durationMs": 16,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "ЕКГ-смужка містить криву (темні пікселі) по всій ширині",
+   "state": "passed",
+   "durationMs": 17,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "послідовність максимальної довжини (200 значень) будується без помилок",
+   "state": "passed",
+   "durationMs": 25,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "короткий запис (10 значень): підписано кожен R-зубець (1–11) і кожну секунду",
+   "state": "passed",
+   "durationMs": 2,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "довгий запис (200 значень): номери R-зубців і підписи секунд не накладаються одне на одне",
+   "state": "passed",
+   "durationMs": 10,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › ecg-render.js - зображення результату розпізнавання",
+   "title": "RR-інтервали в мс і попередження відображаються без винятків",
+   "state": "passed",
+   "durationMs": 6,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › charts.js - шкали і зображення графіків навчання",
+   "title": "linearTicks: «круглі» поділки в межах діапазону",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › charts.js - шкали і зображення графіків навчання",
+   "title": "composeTrainingImage: 1400 × 620 для історії з однієї епохи (граничний випадок) і з 1 000 епох",
+   "state": "passed",
+   "durationMs": 36,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › logger.js - журнал операцій",
+   "title": "додає записи чотирьох рівнів, оновлює лічильник і заглушку",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › logger.js - журнал операцій",
+   "title": "текст повідомлення вставляється як текст, а не HTML (захист від ін’єкції розмітки)",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › logger.js - журнал операцій",
+   "title": "toText: заголовок, кількість записів, дата, час і рівень кожного запису, рядки через CRLF",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "unit",
+   "suite": "Модульні тести › logger.js - журнал операцій",
+   "title": "clear: видаляє всі записи і показує заглушку",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "одне навчання (типові параметри, seed 42, 1 000 епох): точність, чутливість і специфічність на тестовій вибірці ≥ 90 %",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "стабільність якості: 10 навчань з випадковою ініціалізацією ваг - медіана точності ≥ 95 %, найгірше навчання ≥ 90 %",
+   "state": "passed",
+   "durationMs": 21334,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "мережа не перенавчена: точність на навчальній і тестовій вибірках відрізняється менше ніж на 5 п. п.",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "приклади зі статті: норма → «Нормальний ритм», нерегулярний ритм → «Аритмія»",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "брадикардія і тахікардія зі статті - рівні інтервали, двокласова модель визначає їх як норму",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "нові випадкові послідовності (кнопки «Випадкова норма / аритмія»): 50 з 50 розпізнано правильно",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "модель після збереження у JSON і завантаження дає ту саму точність на тестовій вибірці",
+   "state": "passed",
+   "durationMs": 221,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › генерація → навчання → оцінювання → розпізнавання",
+   "title": "довжина K = 8: модель 8–8–2 навчається і розпізнає (точність ≥ 85 %); модель K = 4 відмовляється оцінювати набір K = 8",
+   "state": "passed",
+   "durationMs": 1094,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › розпізнавання → зображення результату → файл",
+   "title": "результат класифікації будується на зображенні і зберігається у PNG, JPG і BMP 1400 × 800",
+   "state": "passed",
+   "durationMs": 65,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › розпізнавання → зображення результату → файл",
+   "title": "графіки навчання навченої моделі зберігаються у PNG",
+   "state": "passed",
+   "durationMs": 11,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "CSV (з BOM, як зберігає застосунок) завантажується в ідентичний набір з тим самим розбиттям",
+   "state": "passed",
+   "durationMs": 3,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "JSON завантажується в ідентичний набір; параметри генерації і зерно відновлюються",
+   "state": "passed",
+   "durationMs": 2,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"length\":3} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"length\":12,\"testPct\":50} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 279,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"perClass\":10,\"testPct\":5} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 107,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"normMin\":30,\"normMax\":200,\"tolerance\":30} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 1,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"normMin\":45,\"tolerance\":30} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 0,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"normMin\":199,\"normMax\":200,\"tolerance\":30} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 278,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з параметрами {\"arrMin\":30,\"arrMax\":220,\"minSpread\":100} (якщо їх пропускає перевірка) зберігається у CSV і завантажується назад",
+   "state": "passed",
+   "durationMs": 277,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "модель, навчена на завантаженому з файлу наборі, розпізнає ритм (точність ≥ 85 %)",
+   "state": "passed",
+   "durationMs": 1164,
+   "error": null
+  },
+  {
+   "level": "integration",
+   "suite": "Інтеграційні тести › файл набору даних: збереження → завантаження → навчання",
+   "title": "набір з файлу, де всі зразки позначено test, придатний для навчання (навчальна вибірка не порожня)",
+   "state": "passed",
+   "durationMs": 13,
+   "error": null
+  }
+ ]
+}
