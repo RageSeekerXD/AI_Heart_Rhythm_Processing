@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Приклад: паралельне навчання в Web Workers</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; margin: 24px; max-width: 900px; color: #1d1b2e; background: #fff; }
+    pre { background: #f4f3fa; padding: 12px; border-radius: 6px; white-space: pre-wrap; }
+    button, input { font: inherit; }
+  </style>
+</head>
+<body>
+  <h1>Паралельне навчання кількох моделей (Web Workers)</h1>
+  <p>Окремий приклад до лабораторної роботи 2. Сторінку потрібно відкривати через локальний сервер
+    (наприклад, Live Server у VS Code): з диска (file://) браузер не дозволяє створити Worker з файлу.</p>
+  <p>
+    <label>Потоків: <input id="threads" type="number" min="1" max="32" value="4"></label>
+    <button id="run" type="button">Запустити порівняння</button>
+  </p>
+  <pre id="out"></pre>
+
+  <script src="../Application/lib/brain-browser.js"></script>
+  <script src="../Application/js/util.js"></script>
+  <script src="../Application/js/rng.js"></script>
+  <script src="../Application/js/generator.js"></script>
+  <script src="../Application/js/model.js"></script>
+  <script src="train-core.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
