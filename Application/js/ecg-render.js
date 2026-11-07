@@ -436,12 +436,14 @@
     return w;
   }
 
-  function renderResult(canvas, data) {
+  // scale > 1 перемальовує те саме зображення з більшою роздільною здатністю
+  // (векторні примітиви, а не розтягування готового растру); типово 1400 × 800
+  function renderResult(canvas, data, scale = 1) {
     const { bpm, inputCount, units, result, normalRange, createdAt } = data;
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
+    canvas.width = Math.round(WIDTH * scale);
+    canvas.height = Math.round(HEIGHT * scale);
     const ctx = canvas.getContext('2d');
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -477,7 +479,7 @@
     ctx.lineTo(M + half + 24 + 0.5, HEIGHT - 28);
     ctx.stroke();
 
-    return { width: WIDTH, height: HEIGHT };
+    return { width: canvas.width, height: canvas.height };
   }
 
   HR.ecg = { renderResult, WIDTH, HEIGHT };
